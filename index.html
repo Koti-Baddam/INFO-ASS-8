@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Discover top-rated local restaurants personalized for every taste. ZipBites connects you with flavors near you.">
+    <title>ZipBites | Find Top-Rated Restaurants Near You</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+        <h1>ZipBites</h1>
+        <p class="tagline">Local flavors, personalized for every taste</p>
+    </header>
+
+    <main class="container">
+        <section class="search-section">
+            <div class="search-container">
+                <div class="search-block">
+                    <label for="zipcode">Enter Pincode</label>
+                    <input type="text" id="zipcode" placeholder="Enter pincode, e.g., 90001-96162" aria-label="Enter pincode range">
+                </div>
+                <div class="search-block">
+                    <label for="dietary-filter">Dietary Options</label>
+                    <select id="dietary-filter" aria-label="Select a dietary option">
+                        <option value="" disabled selected>Select Dietary Option</option>
+                        <option value="vegan">Vegan</option>
+                        <option value="vegetarian">Vegetarian</option>
+                        <option value="gluten-free">Gluten-Free</option>
+                    </select>
+                </div>
+                <button type="button" class="search-button" onclick="fetchRestaurants()">Search</button>
+            </div>
+            <div class="add-restaurant-container">
+                <button type="button" class="add-restaurant-button" onclick="window.location.href='add.html'">Add New Restaurant</button>
+            </div>
+        </section>
+        
+        <section class="restaurant-list">
+            <h2>Top Most Rated Restaurants</h2>
+            <div class="restaurant-list-container" id="restaurant-list" aria-live="polite">
+                <p>No restaurants available. Please search to see results.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>© ZipBites - Bringing local flavors to you</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

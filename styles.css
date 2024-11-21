@@ -1,0 +1,435 @@
+/* CSS Variables for Consistency */
+:root {
+    --primary-color: #ff6347;
+    --secondary-color: #ffebd2;
+    --background-color: #fffaf0;
+    --text-color: #333;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --highlight-color: #e55337;
+    --max-width: 1200px;
+    --padding-main: 20px;
+    --transition-duration: 0.3s;
+}
+
+/* General Body Styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: var(--padding-main);
+    box-sizing: border-box;
+    line-height: 1.6;
+}
+
+/* Header Styling */
+.header {
+    text-align: center;
+    padding: 25px;
+    background-color: #ffffff;
+    box-shadow: 0px 4px 12px var(--shadow-color);
+        width: 100%;
+    max-width: var(--max-width);
+    margin-bottom: 25px;
+    border-radius: 10px;
+}
+
+.header h1 {
+    font-size: 3.5em;
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+.header .tagline {
+    font-size: 1.8em;
+    color: #0f0101;
+    margin-top: 5px;
+}
+
+.header .home-button {
+    padding: 10px 20px;
+    border: none;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 8px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color var(--transition-duration) ease;
+    margin-top: 10px;
+}
+
+.header .home-button:hover {
+    background-color: var(--highlight-color);
+}
+
+/* Search Section with Horizontal Alignment */
+.search-section {
+    display: flex;
+    justify-content: space-between; /* Ensures proper spacing between elements */
+    align-items: center; /* Aligns items vertically */
+    width: 100%;
+    max-width: var(--max-width);
+    gap: 15px;
+    margin-bottom: 25px;
+    flex-wrap: wrap; /* Ensures wrapping on smaller screens */
+}
+
+
+.search-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Align items horizontally */
+    background-color: var(--secondary-color);
+    padding: 15px 20px; /* Adjusted padding for more symmetry */
+    border-radius: 8px;
+    box-shadow: 0px 5px 15px var(--shadow-color);
+    gap: 15px;
+}
+
+.search-container input[type="text"],
+.search-container select {
+    flex: 1; /* Allow inputs to take equal space */
+    padding: 10px 15px;
+    margin-right: 10px; /* Space between inputs */
+    border: 2px solid var(--primary-color);
+    border-radius: 6px;
+    font-size: 1em;
+    background-color: #fffae8;
+    color: var(--text-color);
+    text-align: center;
+    transition: border-color var(--transition-duration) ease;
+}
+
+.search-container button {
+    flex-shrink: 0; /* Prevent the button from resizing */
+    padding: 10px 15px;
+    border: none;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 6px;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color var(--transition-duration) ease;
+    height: 100%; /* Matches input height */
+}
+
+
+.add-restaurant-button {
+    flex-shrink: 0; /* Prevents button from shrinking */
+    padding: 10px 20px;
+    border: none;
+    background-color: #1b76d8;
+    color: white;
+    border-radius: 8px;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0px 4px 8px var(--shadow-color);
+    transition: background-color var(--transition-duration) ease, box-shadow var(--transition-duration) ease;
+    height: 100%; /* Aligns button height with the search container */
+    white-space: nowrap; /* Prevents text wrapping in the button */
+}
+
+
+.add-restaurant-button:hover {
+    background-color: #1b76d8;
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Restaurant List (Full-Screen Grid Style) */
+.restaurant-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: var(--max-width);
+    padding: 15px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0px 5px 15px var(--shadow-color);
+    margin-bottom: 30px;
+}
+
+.restaurant-list-container {
+    width: 100%;
+    max-height: 500px;
+    overflow-y: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    justify-items: center;
+}
+
+/* Restaurant Card */
+.restaurant-item {
+    background-color: #ffffff;
+    padding: 20px;
+    margin: 0;
+    border-radius: 10px;
+    box-shadow: 0px 5px 15px var(--shadow-color);
+    text-align: center;
+    transition: box-shadow var(--transition-duration) ease;
+    width: 90%;
+    max-width: 400px;
+}
+
+.restaurant-item:hover {
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.restaurant-name {
+    font-size: 1.6em;
+    font-weight: bold;
+    color: var(--text-color);
+    margin-bottom: 8px;
+}
+
+.restaurant-name a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.restaurant-name a:hover {
+    color: var(--primary-color);
+}
+
+.restaurant-details p {
+    margin: 5px 0;
+    color: #555;
+    font-size: 1.1em;
+}
+
+/* Review Form Styling (Remains Unchanged) */
+.review-form-container {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 5px 15px var(--shadow-color);
+    width: 100%;
+    max-width: 600px;
+    margin: 25px auto;
+    text-align: center;
+}
+
+.review-form label {
+    font-weight: bold;
+    color: var(--text-color);
+    display: block;
+    margin-top: 15px;
+}
+
+.review-form input[type="text"],
+.review-form textarea,
+.review-form select {
+    width: 100%;
+    padding: 12px;
+    margin-top: 8px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1em;
+    background-color: #fffcf5;
+}
+
+.review-form button {
+    padding: 12px 20px;
+    margin-top: 20px;
+    border: none;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 6px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color var(--transition-duration) ease;
+}
+
+.review-form button:hover {
+    background-color: var(--highlight-color);
+}
+
+/* Footer Styling */
+.footer {
+    background-color: #333;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    width: 100%;
+    max-width: var(--max-width);
+    margin-top: auto;
+    border-radius: 10px;
+    font-size: 0.9em;
+}
+
+.footer p {
+    margin: 0;
+}
+
+/* Buttons (Edit, Delete) */
+.edit-button,
+.delete-button {
+    display: inline-block;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color var(--transition-duration) ease;
+}
+
+.edit-button {
+    background-color: #ffd700;
+    color: #333;
+}
+
+.edit-button:hover {
+    background-color: #ffc107;
+}
+
+.delete-button {
+    background-color: #fd0606;
+    color: white;
+}
+
+.delete-button:hover {
+    background-color: var(--highlight-color);
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+    .search-section {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 15px;
+    }
+
+    .search-container {
+        max-width: 100%;
+    }
+
+    .add-restaurant-button {
+        width: 100%;
+    }
+
+    .restaurant-list-container {
+        grid-template-columns: 1fr;
+        max-height: 300px;
+    }
+
+    .restaurant-item {
+        max-width: 100%;
+    }
+
+    .review-form-container {
+        width: 90%;
+    }
+}
+/* Common Container Styling for Add and Edit Pages */
+.restaurant-form-container {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0px 5px 15px var(--shadow-color);
+    width: 100%;
+    max-width: 600px;
+    margin: 25px auto;
+    text-align: center;
+}
+
+.restaurant-form-container h2 {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: var(--text-color);
+    margin-bottom: 20px;
+}
+
+/* Form Styling */
+.restaurant-form label {
+    font-weight: bold;
+    color: var(--text-color);
+    display: block;
+    margin-top: 15px;
+    text-align: left;
+}
+
+.restaurant-form input[type="text"],
+.restaurant-form input[type="email"],
+.restaurant-form input[type="number"],
+.restaurant-form textarea,
+.restaurant-form select {
+    width: 100%;
+    padding: 12px;
+    margin-top: 8px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1em;
+    background-color: #fffcf5;
+    box-sizing: border-box;
+}
+
+.restaurant-form input:focus,
+.restaurant-form textarea:focus,
+.restaurant-form select:focus {
+    border-color: var(--primary-color);
+    outline: none;
+}
+
+/* Buttons */
+.restaurant-form button {
+    padding: 12px 20px;
+    margin-top: 20px;
+    border: none;
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: 6px;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color var(--transition-duration) ease, box-shadow var(--transition-duration) ease;
+    box-shadow: 0px 4px 8px var(--shadow-color);
+}
+
+.restaurant-form button:hover {
+    background-color: var(--highlight-color);
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Save Changes Button (Specific to Edit Form) */
+.restaurant-form .save-changes {
+    background-color: #007BFF; /* Blue for Save Changes */
+}
+
+.restaurant-form .save-changes:hover {
+    background-color: #0056b3;
+}
+
+/* Go Back Button */
+.restaurant-form .go-back {
+    background-color: #666;
+    margin-left: 10px;
+}
+
+.restaurant-form .go-back:hover {
+    background-color: #444;
+}
+
+/* Mobile Styling */
+@media (max-width: 768px) {
+    .restaurant-form-container {
+        width: 90%;
+    }
+
+    .restaurant-form button {
+        width: 100%;
+    }
+
+    .restaurant-form .go-back {
+        margin-left: 0;
+        margin-top: 15px;
+    }
+}

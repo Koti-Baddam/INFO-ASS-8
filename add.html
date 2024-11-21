@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Add a new restaurant to ZipBites. Enter details such as name, style, location, dietary options, rating, and contact information.">
+    <title>Add Restaurant</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+        <h1>ZipBites</h1>
+        <button onclick="window.location.href='index.html'" class="home-button">Back to Homepage</button>
+    </header>
+
+    <div class="restaurant-form-container">
+        <h2>Add New Restaurant</h2>
+        <form id="add-restaurant-form" class="restaurant-form">
+            <label for="name">Name:</label>
+            <input type="text" id="name" pattern="[A-Za-z\s]+" title="Name should only contain letters and spaces" aria-label="Enter restaurant name" required>
+
+            <label for="style">Style:</label>
+            <input type="text" id="style" pattern="[A-Za-z\s]+" title="Style should only contain letters and spaces" aria-label="Enter restaurant style" required>
+
+            <label for="location">Location:</label>
+            <input type="text" id="location" pattern="[A-Za-z0-9\s,]+" title="Location should only contain letters, numbers, spaces, and commas" aria-label="Enter restaurant location" required>
+
+            <label for="pincode">Pincode:</label>
+            <input type="text" id="pincode" pattern="\d{5}" title="Pincode must be a 5-digit number" aria-label="Enter pincode" required>
+
+            <label for="dietary_options">Dietary Options (comma-separated):</label>
+            <input type="text" id="dietary_options" pattern="[A-Za-z\s,]+" title="Dietary options should only contain letters, spaces, and commas" aria-label="Enter dietary options" required>
+
+            <label for="rating">Rating:</label>
+            <input type="number" id="rating" min="1" max="5" step="0.1" title="Rating must be between 1 and 5, including decimals" aria-label="Enter restaurant rating" required>
+
+            <label for="contact">Contact (Email or Phone):</label>
+            <input type="text" id="contact" pattern="^(\+?[0-9]{1,3}?[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,4}[-.\s]?[0-9]{1,9}|[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$" 
+                   title="Enter a valid email or phone number" aria-label="Enter contact information" required>
+
+            <button type="submit">Add Restaurant</button>
+            <button type="button" class="go-back" onclick="window.location.href='index.html'">Go Back</button>
+        </form>
+    </div>
+
+    <script>
+        const API_URL = 'https://zipbites.free.beeceptor.com/restaurants';
+        let restaurantsCache = JSON.parse(localStorage.getItem('restaurantsCache')) || []; // Load cache from localStorage
+
+        document.getElementById('add-restaurant-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            if (!event.target.checkValidity()) {
+                alert('Please correct the highlighted fields before submitting.');
+                return;
+            }
+
+            const newRestaurant = {
+                name: document.getElementById('name').value.trim(),
+                style: document.getElementById('style').value.trim(),
+                location: document.getElementById('location').value.trim(),
+                pincode: document.getElementById('pincode').value.trim(),
+                dietary_options: document.getElementById('dietary_options').value.split(',').map(opt => opt.trim()),
+                rating: parseFloat(document.getElementById('rating').value),
+                contact: document.getElementById('contact').value.trim(),
+            };
+
+            fetch(API_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(newRestaurant),
+            })
+                .then(response => {
+                    if (response.ok) {
+                        alert('Restaurant added successfully!');
+                        newRestaurant.id = Math.max(...restaurantsCache.map(r => r.id), 0) + 1; // Simulated ID
+                        restaurantsCache.push(newRestaurant);
+                        localStorage.setItem('restaurantsCache', JSON.stringify(restaurantsCache));
+                        window.location.href = 'index.html';
+                    } else {
+                        throw new Error(`Failed to add restaurant: ${response.statusText}`);
+                    }
+                })
+                .catch(error => alert(`Error: ${error.message}`));
+        });
+    </script>
+</body>
+</html>

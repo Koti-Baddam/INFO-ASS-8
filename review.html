@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Submit a review for your favorite restaurant on ZipBites. Share your experience and rate your visit.">
+    <title>Submit Review</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+
+        .review-form-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #444;
+            margin-bottom: 20px;
+        }
+
+        .review-form label {
+            font-size: 14px;
+            margin-bottom: 5px;
+            display: block;
+            color: #555;
+        }
+
+        .review-form input, .review-form textarea, .review-form select, .review-form button {
+            width: 100%;
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .review-form textarea {
+            resize: vertical;
+        }
+
+        .review-form button {
+            background-color: #007BFF;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            transition: background-color 0.3s;
+        }
+
+        .review-form button:hover {
+            background-color: #0056b3;
+        }
+
+        .go-back-button {
+            background-color: #6c757d;
+        }
+
+        .go-back-button:hover {
+            background-color: #5a6268;
+        }
+
+        input:focus, textarea:focus, select:focus, button:focus {
+            outline: 2px solid #007BFF;
+            outline-offset: 2px;
+        }
+
+        @media (max-width: 768px) {
+            .review-form-container {
+                padding: 15px;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+
+            .review-form input, .review-form textarea, .review-form select, .review-form button {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="review-form-container">
+        <h2>Submit a Review</h2>
+        <form id="review-form" class="review-form" onsubmit="submitReview(event)">
+            <fieldset>
+                <legend style="display:none;">Review Form</legend>
+                <label for="reviewer-name">Name:</label>
+                <input type="text" id="reviewer-name" name="name" placeholder="Enter your name" aria-label="Enter your name" required>
+
+                <label for="review-content">Review:</label>
+                <textarea id="review-content" name="review" placeholder="Write your review here..." aria-label="Write your review" required></textarea>
+
+                <label for="review-rating">Rating:</label>
+                <select id="review-rating" name="rating" aria-label="Select your rating" required>
+                    <option value="" disabled selected>Select a rating</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                </select>
+            </fieldset>
+
+            <button type="submit">Submit Review</button>
+            <button type="button" class="go-back-button" onclick="history.back()">Go Back</button>
+        </form>
+    </div>
+
+    <script>
+        const REVIEW_URL = 'https://zipbite.free.beeceptor.com/reviews';
+        const urlParams = new URLSearchParams(window.location.search);
+        const restaurantId = urlParams.get('id');
+
+        function submitReview(event) {
+            event.preventDefault();
+
+            const review = {
+                restaurantId: restaurantId,
+                reviewer: document.getElementById('reviewer-name').value.trim(),
+                content: document.getElementById('review-content').value.trim(),
+                rating: parseInt(document.getElementById('review-rating').value),
+            };
+
+            // Validate inputs
+            if (!review.reviewer || !review.content || isNaN(review.rating) || review.rating < 1 || review.rating > 5) {
+                alert('Please fill all fields correctly before submitting.');
+                return;
+            }
+
+            fetch(REVIEW_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(review),
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Review submitted successfully!');
+                    document.getElementById('review-form').reset();
+                } else {
+                    throw new Error('Failed to submit review: ' + response.statusText);
+                }
+            })
+            .catch(error => {
+                console.error('Error submitting review:', error);
+                alert('An error occurred while submitting your review. Please try again later.');
+            });
+        }
+    </script>
+</body>
+</html>

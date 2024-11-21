@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="View detailed information about restaurants including style, location, dietary options, and ratings.">
+    <title>Restaurant Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fffaf0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+        }
+
+        .flex-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .details-container {
+            width: 100%;
+            margin-bottom: 20px;
+            padding: 20px;
+            background: #fffaf5;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 32px;
+            color: #121111;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #ff5733;
+            font-size: clamp(24px, 5vw, 28px);
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        p {
+            margin: 8px 0;
+            font-size: clamp(16px, 4vw, 18px);
+            line-height: 1.6;
+            color: #444;
+        }
+
+        p strong {
+            color: #d35400;
+        }
+
+        .go-back {
+            background-color: #ff5733;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .go-back:hover {
+            background-color: #e14c3c;
+        }
+
+        .go-back:focus {
+            outline: 2px solid #ff5733;
+            outline-offset: 3px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            h1 {
+                font-size: 28px;
+            }
+            p {
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Restaurant Details</h1>
+        <div class="flex-wrapper">
+            <div class="details-container" id="restaurant-details" aria-live="polite">
+                <!-- Restaurant details content will be injected here by JavaScript -->
+            </div>
+            <button class="go-back" onclick="window.history.back()">Go Back</button>
+        </div>
+    </div>
+    <script>
+        const API_URL = 'https://zipbites.free.beeceptor.com/restaurants';
+        const urlParams = new URLSearchParams(window.location.search);
+        const restaurantId = urlParams.get('id');
+
+        function fetchRestaurantDetails() {
+            fetch(API_URL)
+                .then(response => response.json())
+                .then(data => {
+                    const restaurant = data.find(item => item.id == restaurantId);
+
+                    if (!restaurant) {
+                        document.getElementById('restaurant-details').innerHTML = '<p>Restaurant not found.</p>';
+                        return;
+                    }
+
+                    // Handle optional fields and validate rating
+                    const dietaryOptions = restaurant.dietary_options?.join(', ') || 'Not specified';
+                    const contact = restaurant.contact || 'Not available';
+                    const rating = restaurant.rating ? parseFloat(restaurant.rating).toFixed(1) : 'No rating';
+
+                    if (rating < 1 || rating > 5 || isNaN(rating)) {
+                        console.error('Invalid rating:', rating);
+                        document.getElementById('restaurant-details').innerHTML += '<p><strong>Rating:</strong> Invalid rating</p>';
+                    } else {
+                        const detailsContainer = document.getElementById('restaurant-details');
+                        detailsContainer.innerHTML = `
+                            <h2>${restaurant.name}</h2>
+                            <p><strong>Style:</strong> ${restaurant.style || 'Not specified'}</p>
+                            <p><strong>Location:</strong> ${restaurant.location || 'Not specified'} - ${restaurant.pincode || 'N/A'}</p>
+                            <p><strong>Dietary Options:</strong> ${dietaryOptions}</p>
+                            <p><strong>Rating:</strong> ${rating}</p>
+                            <p><strong>Contact:</strong> ${contact}</p>
+                        `;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching restaurant details:', error);
+                    document.getElementById('restaurant-details').innerHTML = '<p>Error loading details.</p>';
+                });
+        }
+
+        fetchRestaurantDetails();
+    </script>
+</body>
+</html>
