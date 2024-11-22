@@ -128,19 +128,40 @@
         function submitReview(event) {
             event.preventDefault();
 
-            const review = {
-                restaurantId: restaurantId,
-                reviewer: document.getElementById('reviewer-name').value.trim(),
-                content: document.getElementById('review-content').value.trim(),
-                rating: parseInt(document.getElementById('review-rating').value),
-            };
+            const nameInput = document.getElementById('reviewer-name').value.trim();
+            const reviewInput = document.getElementById('review-content').value.trim();
+            const ratingInput = parseFloat(document.getElementById('review-rating').value);
 
-            // Validate inputs
-            if (!review.reviewer || !review.content || isNaN(review.rating) || review.rating < 1 || review.rating > 5) {
-                alert('Please fill all fields correctly before submitting.');
+            // Validation rules
+            const nameRegex = /^[A-Za-z\s]+$/; // Only letters and spaces
+            const ratingRegex = /^([1-4](\.\d+)?|5(\.0+)?)$/; // Numbers between 1 and 5, including decimals
+
+            // Validate name
+            if (!nameRegex.test(nameInput)) {
+                alert('Name must only contain letters and spaces.');
                 return;
             }
 
+            // Validate rating
+            if (!ratingRegex.test(ratingInput)) {
+                alert('Rating must be a number between 1 and 5 (decimals allowed).');
+                return;
+            }
+
+            // Validate review (must not be empty, but no regex needed)
+            if (!reviewInput) {
+                alert('Review cannot be empty.');
+                return;
+            }
+
+            const review = {
+                restaurantId: restaurantId,
+                reviewer: nameInput,
+                content: reviewInput,
+                rating: ratingInput,
+            };
+
+            // Submit the review via fetch
             fetch(REVIEW_URL, {
                 method: 'POST',
                 headers: {
@@ -148,18 +169,18 @@
                 },
                 body: JSON.stringify(review),
             })
-            .then(response => {
-                if (response.ok) {
-                    alert('Review submitted successfully!');
-                    document.getElementById('review-form').reset();
-                } else {
-                    throw new Error('Failed to submit review: ' + response.statusText);
-                }
-            })
-            .catch(error => {
-                console.error('Error submitting review:', error);
-                alert('An error occurred while submitting your review. Please try again later.');
-            });
+                .then(response => {
+                    if (response.ok) {
+                        alert('Review submitted successfully!');
+                        document.getElementById('review-form').reset();
+                    } else {
+                        throw new Error('Failed to submit review: ' + response.statusText);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error submitting review:', error);
+                    alert('An error occurred while submitting your review. Please try again later.');
+                });
         }
     </script>
 </body>

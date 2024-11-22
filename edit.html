@@ -20,10 +20,10 @@
             <input type="text" id="name" pattern="[A-Za-z\s]+" title="Name should only contain letters and spaces" aria-label="Enter the restaurant's name" required>
 
             <label for="style">Style:</label>
-            <input type="text" id="style" aria-label="Enter the restaurant style (e.g., Italian, Fast Food)" required>
+            <input type="text" id="style" pattern="[A-Za-z\s]+" title="Style should only contain letters and spaces" aria-label="Enter restaurant style" required>
 
             <label for="location">Location:</label>
-            <input type="text" id="location" aria-label="Enter the restaurant location" required>
+            <input type="text" id="location" pattern="[A-Za-z0-9\s,]+" title="Location should only contain letters, numbers, spaces, and commas" aria-label="Enter restaurant location" required>
 
             <label for="pincode">Pincode:</label>
             <input type="text" id="pincode" pattern="\d{5}" title="Pincode must be a 5-digit number" aria-label="Enter the 5-digit pincode" required>
